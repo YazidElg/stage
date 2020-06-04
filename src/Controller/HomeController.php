@@ -14,12 +14,11 @@ class HomeController extends AbstractController {
   @Route("/hello/{prenom}", name="hello_prenom")
   *@return void
 */
-    public function hello($prenom = "anonyme" , $age = 0) {
+    public function hello() {
       return $this->render(
         'hello.html.twig', 
         [
-          'prenom' => $prenom,
-          'age' => $age
+         
 
         ]
       );
