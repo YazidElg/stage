@@ -28,15 +28,11 @@ class HomeController extends AbstractController {
      * @Route("/", name="homepage")
      */
     public function home(){
-       $prenoms = ["Lior" => 31, "Joseph" => 12,"Anne" => 55];
+       
 
        return $this->render(
            'home.html.twig',
-           [ 
-               'title' => "Bonjour à tous",
-                'age' => 5,
-               'tableau' => $prenoms
-            ]
+          
        );
 
 }
