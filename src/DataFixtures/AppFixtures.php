@@ -15,7 +15,7 @@ class AppFixtures extends Fixture
     	$ad = new Ad();
 
     	$ad->setTitle("Titre de l'annonce n $i")
-        ->setSlug("titre-de-l-annonce$i")
+        
     	->setCoverImage("http://placehold.it/1000x300")
     	->setIntroduction("Bonjour c'est une introduction")
     	->setPrice(mt_rand(40,3000))
