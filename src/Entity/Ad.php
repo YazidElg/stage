@@ -13,11 +13,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=AdRepository::class)
- * @ORM\HasLifecycleCallbacks
- @UniqueEntity(
-fields={"title"},
-message="Une autre annonce possède déjà ce titre, Veuillez le modifier"
- )
+ * @ORM\HasLifecycleCallbacks()
+ *@UniqueEntity(
+*fields={"title"},
+*message="Une autre annonce possède déjà ce titre, Veuillez le modifier"
+ *)
  */
 class Ad
 {
@@ -30,7 +30,7 @@ class Ad
 
     /**
      * @ORM\Column(type="string", length=255)
-     @Assert\Length(min=10, max=255, minMessage="Votre titre doit faire plus de 10 caractères !" )
+     *@Assert\Length(min=10, max=255, minMessage="Votre titre doit faire plus de 10 caractères !" )
      */
     private $title;
 
@@ -41,19 +41,19 @@ class Ad
 
     /**
      * @ORM\Column(type="text")
-     @Assert\Length(min=20, minMessage="Votre introduction doit faire plus de 20 caractères")
+    * @Assert\Length(min=20, minMessage="Votre introduction doit faire plus de 20 caractères")
      */
     private $introduction;
 
     /**
      * @ORM\Column(type="text")
-     @Assert\Length(min=30, minMessage="Votre description doit faire plus de 30 caractères")
+     *@Assert\Length(min=30, minMessage="Votre description doit faire plus de 30 caractères")
      */
     private $content;
 
     /**
      * @ORM\Column(type="string", length=255)
-     @Assert\Url()
+     *@Assert\Url()
      */
     private $coverImage;
 
@@ -64,6 +64,7 @@ class Ad
 
     /**
      * @ORM\OneToMany(targetEntity=Image::class, mappedBy="ad", orphanRemoval=true)
+     * @Assert\Valid()
      */
     private $images;
 
@@ -72,9 +73,28 @@ class Ad
      */
     private $slug;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="ads")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $author;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
+    }
+    /**
+     * Initialiser le slug
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     * 
+     * @return void
+     */
+    public function initializeSlug(){
+        if(empty($this->slug)){
+            $slugify = new Slugify();
+            $this->slug = $slugify->slugify($this->title);
+        }
     }
    
 
@@ -194,6 +214,18 @@ class Ad
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }

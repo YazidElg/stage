@@ -21,13 +21,13 @@ class AdType extends AbstractType
     /**
     *Permet d'avoir la configuration de base d'un champ 
     *@param string $label
-    @param string $placeholder
-    @param array $options
-    @return array
+    *@param string $placeholder
+    *@param array $options
+    *@return array
 
     */
 
-    private function getConfiguration($label, $placeholder, $options=[]) {
+    private function getConfiguration($label, $placeholder, $options = []) {
         return array_merge([
                 'label' => $label,
                 'attr' => [
@@ -43,7 +43,7 @@ class AdType extends AbstractType
         $builder
             ->add('title', TextType::class, $this->getConfiguration("Titre", "Tapez un titre pour votre annonce"))
        ->add('slug', TextType::class, $this->getConfiguration("Adresse web", "Tapez l'adresse web (Automatique)", [
-            'required' => true
+            'required' => false
 
        ]))
             ->add('introduction', TextType::class, $this->getConfiguration("introduction", "Donnez une introduction pour votre annonce"))
@@ -65,7 +65,8 @@ class AdType extends AbstractType
             ->add('images', CollectionType::class, 
                 [
                     'entry_type' => ImageType::class, 
-                    'allow_add' => true
+                    'allow_add' => true,
+                    'allow_delete' => true
                 ]
 
         )
