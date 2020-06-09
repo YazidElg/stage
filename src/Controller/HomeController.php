@@ -10,8 +10,8 @@ class HomeController extends AbstractController {
 /**
   
   *@Route("/hello/{prenom}/{age}" , name="hello")
-    @Route("/hello", name="hello_base")
-  @Route("/hello/{prenom}", name="hello_prenom")
+    *@Route("/hello", name="hello_base")
+  *@Route("/hello/{prenom}", name="hello_prenom")
   *@return void
 */
     public function hello() {

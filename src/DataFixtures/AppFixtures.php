@@ -8,23 +8,37 @@ use App\Entity\Image;
 use Faker\Factory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+	private $encoder;
+
+	public function __construct(UserPasswordEncoderInterface $encoder){
+		$this->encoder = $encoder;
+	}
+
+
     public function load(ObjectManager $manager)
     {
 		//gestion des utilisateurs
 		$users = [];
+	
 		for($i = 1; $i <= 10 ; $i++	){
 			$user = new User();
+			$pictureId = $i .'.jpg';
+			$picture = 'https://randomuser.me/api/portraits/men/' . $pictureId;
+
+			$hash = $this->encoder->encodePassword($user, 'password');
 
 			$user->setFirstName("Prenom $i")
 				->setLastName("Nom $i")
 				->setEmail("nom$i-penom$i@gmail.com")
 				->setIntroduction("Introduction $i")
 				->setDescription("<p> c'est une description c'est une description c'est une description c'est une description c'est une description c'est une description c'est une description $i </p>")
-				->setHash('password')
-				->setSlug("Nom-prenom-$i");
+				->setHash($hash)
+				->setSlug("Nom-prenom-$i")
+				->setPicture($picture);
 
 			$manager->persist($user);
 			$users[] = $user;
