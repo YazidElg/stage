@@ -2,17 +2,18 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
 use App\Entity\User;
 use  App\Form\AccountType;
-use Doctrine\ORM\Mapping as ORM;
-
-use Doctrine\Common\Persistence\ObjectManager;
 use App\Form\RegistrationType;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\HttpFoundation\Response;
+
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class AccountController extends AbstractController
@@ -84,6 +85,7 @@ class AccountController extends AbstractController
      * Permet de modifer un profile
      * 
      * @Route("/account/profile", name="account_profile")
+     * @IsGranted("ROLE_USER")
      * 
      * @return Response
      */
@@ -115,6 +117,7 @@ class AccountController extends AbstractController
      * permet d'afficher le profil de l'utilisateur connecté
      * 
      * @Route("/account", name="account_index")
+     * @IsGranted("ROLE_USER")
      * 
      * @return Response
      */
