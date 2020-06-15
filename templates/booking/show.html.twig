@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+{% block title %}Reservation nº {{booking.id}}{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col">
+            <div class="alert alert-light">
+                <h2>Details</h2>
+                <dl class="row">
+                    <dt class="col-md-4">Numero</dt>
+                    <dd class="col-md-8">{{booking.id}}</dd>
+                    <dt class="col-md-4">Date de depart</dt>
+                    <dd class="col-md-8">{{booking.startDate | date('d/m/y')}}</dd>
+                    <dt class="col-md-4">Date de fin</dt>
+                    <dd class="col-md-8">{{booking.endDate | date('d/m/y')}}</dd>
+                    <dt class="col-md-4">Nombres de jours</dt>
+                    <dd class="col-md-8">{{booking.duration}}</dd>
+                    <dt class="col-md-4">Mentant total</dt>
+                    <dd class="col-md-8">{{booking.amount}} &dirham;</dd>
+                    <dt class="col-md-4">Commentaire</dt>
+                    <dd class="col-md-8">{{booking.comment}}</dd>
+
+                </dl>
+            </div>
+        </div>
+    </div>
+{% endblock %}
