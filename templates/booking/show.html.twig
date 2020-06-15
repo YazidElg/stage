@@ -1,6 +1,29 @@
 {% extends 'base.html.twig' %}
-{% block title %}Reservation nº {{booking.id}}{% endblock %}
+{% block title %}Location nº {{booking.id}}{% endblock %}
+        
 {% block body %}
+
+    {% set ad = booking.ad %}
+    {% set author = ad.author %}
+
+
+    <h1>Votre location (nº{{booking.id}})</h1>
+    {% if app.request.query.get('withAlert') %}
+         <div class="alert alert-success">
+            <h4 class="alert-heading">Bravo !</h4>
+            <p>
+                Votre location aupres de 
+                <strong><a href="{{ path("user_show", {'slug':author.slug})}}">
+                {{author.fullName}}</a>
+                </strong>
+                pour l'annonce 
+                <strong><a href="{{ path("ads_show", {'slug':ad.slug})}}">
+                {{ad.title}}</a>
+                </strong>
+
+            </p>
+         </div>
+    {% endif %}
     <div class="row">
         <div class="col">
             <div class="alert alert-light">
