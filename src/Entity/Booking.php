@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\BookingRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=BookingRepository::class)
@@ -32,11 +33,13 @@ class Booking
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\Date(message="Attention,la date de depart doit etre au bon format ! ")
      */
     private $startDate;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\Date(message="Attention,la date de fin doit etre au bon format ! ")
      */
     private $endDate;
 
@@ -68,6 +71,55 @@ class Booking
         if(empty($this->amount)){
             $this->amount = $this->ad->getPrice() * $this->getDuration();
         }
+    }
+
+    public function isBookableDates(){
+        //il faut savoir les dates qui sont impossibles pour l'annonce
+        $notAvailableDays = $this->ad->getNotAvailableDays();
+        
+        //il faut comparer les dates choisis avec les dates impossibles
+        $bookingDays = $this->getDays();
+
+        $formatDay = function($day){
+            return $day->format('Y-m-d');
+        };
+
+        // tabls des chaines des caracteres des journes 
+
+        $days         = array_map($formatDay,$bookingDays);
+        $notAvailable = array_map($formatDay,$notAvailableDays);
+
+        foreach($days as $day){
+            if(array_search($day, $notAvailable) !== false) return false;
+        }    
+
+        return true;
+    }
+
+
+
+
+    /**
+     * @return array table representant l'objet DateTime des jours de la reserv
+     */
+    public function getDays(){
+        $resultat = range(  
+            $this->startDate->getTimestamp(),
+            $this->endDate->getTimestamp(),
+            24 * 60 * 60 
+
+        );
+
+        // $days = array_map(function($dayTimestamp) {
+        //     return new \DateTime(date('Y-m-d', $dayTimestamp));
+        // });
+        $days = array_map(function($dayTimestamp) {
+            return new \DateTime(date('Y-m-d', $dayTimestamp));
+
+        },$resultat);
+
+        return $days;
+
     }
 
     public function getDuration(){

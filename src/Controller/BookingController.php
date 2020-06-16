@@ -28,12 +28,23 @@ class BookingController extends AbstractController
             $user = $this->getUser();
             $booking->setBooker($user)
                     ->setAd($ad);
-
+            
+            // si les dates ne sont pas dispo msg d'erreur
+            if(!$booking->isBookableDates()){
+                $this->addFlash(
+                    'warning',
+                    "les dates que vous avez choisi ne peuvent etre reservees : elles sont deja prises."
+                );
+            }else {
+            // sinon enregistrement et redirection
             $manager->persist($booking);
             $manager->flush();
 
             return $this->redirectToRoute('booking_show',['id' => $booking->getId(),
             'withAlert' => true ]);
+            }
+
+            
 
         }
 
