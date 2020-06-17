@@ -39,12 +39,35 @@
                     <dt class="col-md-4">Nombres de jours</dt>
                     <dd class="col-md-8">{{booking.duration}}</dd>
                     <dt class="col-md-4">Mentant total</dt>
-                    <dd class="col-md-8">{{booking.amount}} &dirham;</dd>
+                    <dd class="col-md-8">{{booking.amount}} dh</dd>
                     <dt class="col-md-4">Commentaire</dt>
-                    <dd class="col-md-8">{{booking.comment}}</dd>
+                    <dd class="col-md-8">{{booking.comment | default('Aucun commentaire')}}</dd>
 
                 </dl>
             </div>
+            <div class="alert alert-light" id="comment">
+					<h2 class="alert-heading">Votre avis compte !</h2>
+					{% if date() > date(booking.endDate) %}
+                        {% set comment = booking.ad.commentFromAuthor(app.user) %}
+                        {% if comment is not null %}
+                            <blockquote>
+                                {{comment.content}}
+                            </blockquote>
+                            <strong>Note : </strong> {% include 'partials/rating.html.twig' with {'rating' : comment.Rating} %}
+
+                        {% else %}
+                            {{ form_start(form) }}
+                            {{ form_widget(form) }}
+                            <button type="submit" class="btn btn-success">Confirmer !</button>
+                            
+                            {{ form_end(form) }}
+                        {% endif %}
+					
+					{% else %}
+					<p>Vous ne pouvez pas noter cette annonce tant que votre location ne sera pas complete !</p>
+					{% endif %}
+            </div>
         </div>
+        
     </div>
 {% endblock %}

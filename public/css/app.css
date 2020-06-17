@@ -40,3 +40,6 @@ div.carousel-caption{
 		color: rgb(255, 0, 0) !important;
 
 }
+span.rating i {
+	color : goldenrod;
+}
