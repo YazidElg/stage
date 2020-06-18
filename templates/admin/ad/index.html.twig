@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/base.html.twig' %}
 
 {% block title %}Administration des annonces !{% endblock %}
 
@@ -26,10 +26,10 @@
                     <img src="{{ad.author.picture}}" alt="Avatar de {{ad.author.fullName}}" class="avatar avatar-micro mr-2">{{ad.author.fullName}}
                 </td>
                 <td class="text-center">
-                    <span class="badge badge-primary rounded">{{ad.bookings | lenght}}</span>
+                    <span class="badge badge-primary rounded">{{ad.bookings | length}}</span>
                 </td> 
                 <td class="text-center">
-                    <span class="badge badge-primary rounded">{{ad.avgRatings | number_format(1,',',' ')}}</span>
+                    <span class="badge badge-primary rounded">{{ad.getAvgRating | number_format(1,',',' ')}}</span>
 
                 </td>
                 <td>

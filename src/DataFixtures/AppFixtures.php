@@ -35,7 +35,7 @@ class AppFixtures extends Fixture
 		$adminUser = new User();
 		$adminUser->setFirstName('Yousri')
 				  ->setLastName('alaoui')
-				  ->setEmail('yousri@gmail.com')
+				  ->setEmail('youssri@gmail.com')
 				  ->sethash($this->encoder->encodePassword($adminUser,'password'))
 				  ->setSlug("Nom-prenom")
 				  ->setPicture('https://assets-fr.imgfoot.com/media/cache/642x382/neymar-5e9abe7a6fa87.jpg')

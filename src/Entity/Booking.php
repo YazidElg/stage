@@ -41,7 +41,7 @@ class Booking
     /**
      * @ORM\Column(type="datetime")
      * @Assert\Date(message="Attention,la date de fin doit etre au bon format ! ")
-     * @Assert\GreaterThan(propertyPath="startDate", message="la date de fin doit etre plus eloigne que la date de depart !")
+     * @Assert\GreaterThan(propertyPath="startDate", message="la date de fin doit etre plus eloigne que la date de fin !")
      */
     private $endDate;
 
