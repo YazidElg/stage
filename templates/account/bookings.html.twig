@@ -8,12 +8,13 @@
             <p>Retrouvez ci-dessous toutes vos locations passees et a venir</p>
         </div>
         {% for booking in app.user.bookings %}
+        {% set ad = booking.ad%}
         <div class="row mt-5">
             <div class="col-md-4">
-                <img src="{{booking.ad.coverImage}}" alt="Photo de l'annonce {{booking.ad.title}}" class="img-fluid">
+                <img src="{{ad.coverImage}}" alt="Photo de l'annonce {{ad.title}}" class="img-fluid">
 
                 <div class="mt-3">
-                    {% set comment = booking.ad.commentFromAuthor(app.user) %}
+                    {% set comment = ad.commentFromAuthor(app.user) %}
                         {% if comment is not null %}
                             
                             <strong>Note : </strong> {% include 'partials/rating.html.twig' with {'rating' : comment.Rating} %}
@@ -27,7 +28,7 @@
 
             </div>
             <div class="col-md-8">
-                <h4>{{booking.ad.title}}</h4>
+                <h4>{{ad.title}}</h4>
                 <p>
                     Location <strong>nº{{booking.id}}</strong><br>
                     Du {{booking.startDate|date('d/m/Y')}} au {{booking.endDate|date('d/m/Y')}} ({{booking.amount}} &dirham;)
