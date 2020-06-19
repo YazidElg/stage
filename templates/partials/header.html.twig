@@ -7,7 +7,7 @@
   <div class="collapse navbar-collapse" id="navbarColor01">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item ">
-        <a class="nav-link" href="{{ path('homepage') }}">Acceuil</a>
+        <a class="nav-link" href="{{ path('homepage') }}">Accueil</a>
       </li>
       <li class="nav-item ">
         <a class="nav-link" href="{{ path('ads_index') }}">Annonces</a>
@@ -37,7 +37,12 @@
           </li>
            <li class="nav-item">
             <a href="{{ path('account_login') }}" class="nav-link">Connexion</a>
+
           </li>
+          <li class="nav-item">
+            <a href="{{ path('admin_ads_index') }}" class="nav-link">Se connecter en tant que administration</a>
+          </li>
+
 
         {% endif %}
       	
