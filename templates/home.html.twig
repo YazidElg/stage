@@ -15,6 +15,32 @@ Bienvenue
             <a class="btn btn-primary btn-lg" href="{{ path('ads_index') }}" role="button">Voir les annonces </a>
           </p>
     </div>
+    <h2 class="h1 my-5">Nos locations stars</h2>
+    <div class="row">
+      {% for data in ads %}
+        {% include 'ad/_ad.html.twig' with {'ad': data.annonce} %}
+      {% endfor %}
+    </div>
+    <h2 class="h1 my-5">Nos proprietaires stars</h2>
+    <div class="row">
+      {% for data in users %}
+        <div class="col">
+          <div class="card border-secondary mb-3">
+          <a href="{{path('user_show',{'slug': data.user.slug}) }}">
+          <h4 class="card-title">{{data.user.fullName}}</h4>
+          </a>
+            <hr>
+            <div class="card-text">
+              <img src="{{data.user.picture}}" alt="Avatar de {{data.user.fullName}}" class="float-left mr-3">
+              <p>{{data.user.introduction}}</p>
+              
+             
+            </div>
+            
+          </div>
+        </div>
+      {% endfor %}
+    </div>
 
 
     
