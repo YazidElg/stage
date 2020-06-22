@@ -13,7 +13,7 @@
                 <th>Auteur</th>
                 <th class="text-center">Locations</th>
                 <th class="text-center">note</th>
-                <th>Actions</th>
+                <th></th>
             </tr>
         </thead>
 
@@ -27,20 +27,37 @@
                 </td>
                 <td class="text-center">
                     <span class="badge badge-primary rounded">{{ad.bookings | length}}</span>
-                </td> 
+                </td>
                 <td class="text-center">
                     <span class="badge badge-primary rounded">{{ad.getAvgRating | number_format(1,',',' ')}}</span>
 
                 </td>
                 <td>
-                <a href="{{ path('admin_ads_edit', {'id': ad.id }) }}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                {# <a href="{{ path('admin_ads_edit', {'id': ad.id }) }}" class="btn btn-primary"><i class="fas fa-edit"></i></a> #}
                 <a href="{{ path('admin_ads_delete', {'id': ad.id }) }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                
+
                 </td>
             </tr>
-        {% endfor %}    
+        {% endfor %}
         </tbody>
     </table>
+
+    <div class="d-flex justify-content-center">
+        <ul class="pagination">
+                <li class="page-item {% if page == 1 %}disabled{% endif %}">
+                <a class="page-link" href="{{ path('admin_ads_index', {'page' : page - 1 }) }}">&laquo;</a>
+                </li>
+                {% for i in 1..pages %}
+                <li class="page-item {% if page == i%}active{% endif %}">
+                <a class="page-link" href="{{ path('admin_ads_index', {'page' : i }) }}">{{ i }}</a>
+                </li>
+                {% endfor %}
+                <li class="page-item {% if page == pages %}disabled{% endif %}">
+                <a class="page-link" href="{{ path('admin_ads_index', {'page' : page + 1 }) }}">&raquo;</a>
+                </li>
+        </ul>
+    </div>
+
 
 </div
 </div>

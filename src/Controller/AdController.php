@@ -18,16 +18,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdController extends AbstractController
 {
     /**
-     * @Route("/ads", name="ads_index")
+     * @Route("/ads/{page<\d+>?1}", name="ads_index")
      */
-    public function index(AdRepository $repo)
+    public function index(AdRepository $repo, $page)
     {
+        $limit = 10;
+        $start = $page * $limit - $limit;
+        $total = count($repo->findAll());
+        $pages = ceil($total / $limit);
     	
 
-    	$ads = $repo->findAll();
+    	
 
         return $this->render('ad/index.html.twig', [
-            'ads' => $ads ,
+            'ads' => $repo->findBy([],[], $limit, $start),
+            'pages' => $pages,
+            'page' => $page
         ]);
     }
      /**
