@@ -6,6 +6,7 @@ use App\Form\AdType;
 use App\Entity\Image;
 use App\Repository\AdRepository;
 use App\Controller\ObjectMananger;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
@@ -150,7 +151,7 @@ class AdController extends AbstractController
     *@param ObjectManager $manager
     * @return Response
     */
-    public function delete(Ad $ad,ObjectManager $manager){
+    public function delete(Ad $ad,EntityManagerInterface $manager){
         $manager->remove($ad);
         $manager->flush();
         $this->addFlash(
